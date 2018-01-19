@@ -79,7 +79,7 @@ def main():
     M.addGeometry(mp.Block(mp.Vector3(1e20, 20, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=1)))
     M.addGeometry(mp.Block(mp.Vector3(1e20, 10, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=12)))
     #M.viewGeometry()
-    M.addSource(mp.Source(mp.ContinuousSource(frequency=0.2,width=20),component=mp.Ez,center=mp.Vector3(-31,0),size=mp.Vector3(0,10)))
+    M.addSource(mp.Source(mp.ContinuousSource(frequency=0.02,width=20),component=mp.Ez,center=mp.Vector3(-31,0),size=mp.Vector3(0,10)))
     M.simulate(until=600)
 
 if (__name__ == '__main__'):
