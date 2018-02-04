@@ -15,6 +15,18 @@ def get_slice(sim):
     size = mp.Vector3(0, 0)
     vals.append(sim.get_field_point(mp.Ez,center))
 
+vals2 = []
+def get_slice_start(sim):
+    center = mp.Vector3(-15,0)
+    size = mp.Vector3(0, 0)
+    vals2.append(sim.get_field_point(mp.Ez,center))
+
+w_vals = []
+def get_waveguide_slice(sim):
+    center = mp.Vector3(0,0)
+    size = mp.Vector3(32, 0)
+    w_vals.append(sim.get_array(center=center, size=size, component=mp.Ez))
+
 class Model:
     def __init__(self, cell_x, cell_y, cell_z=0,dpml=1.0,output_directory='temp'):
         self.cell = mp.Vector3(cell_x,cell_y,cell_z)
@@ -64,23 +76,31 @@ class Model:
         self.sim.run(mp.at_beginning(mp.output_epsilon),
                      mp.to_appended("ez", mp.at_every(2, mp.output_efield_z)),
                      mp.at_every(2,get_slice),
+                     mp.at_every(2,get_slice_start),
+                     mp.at_every(2,get_waveguide_slice),
                      until=until)
 
 def waveguide2D():
     width = 4
-    length = 15.0
+    length = 10.0
+    period = 50
     M = Model(32, 16,dpml=0.2,output_directory='waveguide2D')
     M.addGeometry(mp.Block(mp.Vector3(1e20, 1e20, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=1)))
-    M.addGeometry(mp.Block(mp.Vector3(1e20, width, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=50)))
-    M.addGeometry(mp.Block(mp.Vector3(1, width, 1e20),center=mp.Vector3(-length/2 - 0.5, 0),material=mp.Medium(epsilon=1)))
-    M.addGeometry(mp.Block(mp.Vector3(1, width, 1e20),center=mp.Vector3(length/2 + 0.5, 0),material=mp.Medium(epsilon=1)))
+    M.addGeometry(mp.Block(mp.Vector3(1e20, width, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=100)))
+    M.addGeometry(mp.Block(mp.Vector3(2, width, 1e20),center=mp.Vector3(-length/2 - 1, 0),material=mp.Medium(epsilon=1)))
+    M.addGeometry(mp.Block(mp.Vector3(2, width, 1e20),center=mp.Vector3(length/2 + 1, 0),material=mp.Medium(epsilon=1)))
     # M.viewGeometry()
-    M.addSource(mp.Source(mp.ContinuousSource(wavelength=40,width=10,end_time=1e20),
+    M.addSource(mp.Source(mp.ContinuousSource(wavelength=period,width=10,end_time=20*period),
                           component=mp.Ez,
                           center=mp.Vector3(-15,0),
                           size=mp.Vector3(0,width)))
-    M.simulate(resolution=20,until=1000,output_directory='waveguide2D')
+    M.simulate(resolution=20,until=20*period,output_directory='waveguide2D')
     plt.plot(vals)
+    plt.plot(vals2)
+    plt.show()
+    plt.figure(dpi=100)
+    plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
+    plt.axis('off')
     plt.show()
 
 def ringResonator():
