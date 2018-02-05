@@ -1,0 +1,84 @@
+
+**
+** successfully loaded python MPI module (mpi4py)
+**
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+12.9
+-----------
+Initializing structure...
+Halving computational cell along direction y
+time for set_epsilon = 0.394355 s
+Working in 2D dimensions.
+Computational cell is 32 x 8.2 x 0 with resolution 10
+     block, center = (0,0,0)
+          size (1e+20,1e+20,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (1,1,1)
+     block, center = (0,0,0)
+          size (1e+20,0.5,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (100,100,100)
+     block, center = (-7.45,0,0)
+          size (2,0.5,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (1,1,1)
+     block, center = (7.45,0,0)
+          size (2,0.5,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (1,1,1)
+     block, center = (0,0,0)
+          size (12.9,0.5,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (50,50,50)
+time for set_epsilon = 0.0396949 s
+-----------
+Meep: using output directory 'waveguide2D'
+creating output file "waveguide2D/model_builder-eps-000000.00.h5"...
+creating output file "waveguide2D/model_builder-ez.h5"...
+Meep progress: 192.0/2500.0 = 7.7% done in 4.0s, 48.3s to go
+on time step 3841 (time=192.05), 0.00104197 s/step
+Meep progress: 422.45/2500.0 = 16.9% done in 8.0s, 39.4s to go
+on time step 8451 (time=422.55), 0.00086769 s/step
+Meep progress: 641.6/2500.0 = 25.7% done in 12.0s, 34.8s to go
+on time step 12835 (time=641.75), 0.000912478 s/step
+Meep progress: 873.25/2500.0 = 34.9% done in 16.0s, 29.8s to go
+on time step 17465 (time=873.25), 0.000864614 s/step
+Meep progress: 1106.6/2500.0 = 44.3% done in 20.0s, 25.2s to go
+on time step 22133 (time=1106.65), 0.000856964 s/step
+Meep progress: 1334.0/2500.0 = 53.4% done in 24.0s, 21.0s to go
+on time step 26681 (time=1334.05), 0.000879688 s/step
+Meep progress: 1576.0/2500.0 = 63.0% done in 28.0s, 16.4s to go
+on time step 31520 (time=1576), 0.000827055 s/step
+Meep progress: 1802.9/2500.0 = 72.1% done in 32.0s, 12.4s to go
+on time step 36058 (time=1802.9), 0.000883455 s/step
+Meep progress: 1864.65/2500.0 = 74.6% done in 36.0s, 12.3s to go
+on time step 37293 (time=1864.65), 0.0032468 s/step
+Meep progress: 2062.0/2500.0 = 82.5% done in 40.0s, 8.5s to go
+on time step 41241 (time=2062.05), 0.00101332 s/step
+Meep progress: 2276.45/2500.0 = 91.1% done in 44.0s, 4.3s to go
+on time step 45534 (time=2276.7), 0.000931781 s/step
+run 0 finished at t = 2500.0 (50000 timesteps)
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/numpy/core/numeric.py:492: ComplexWarning: Casting complex values to real discards the imaginary part
+  return array(a, dtype, copy=False, order=order)
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/numpy/core/numeric.py:492: ComplexWarning: Casting complex values to real discards the imaginary part
+  return array(a, dtype, copy=False, order=order)
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/numpy/core/numeric.py:492: ComplexWarning: Casting complex values to real discards the imaginary part
+  return array(a, dtype, copy=False, order=order)
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/numpy/core/numeric.py:492: ComplexWarning: Casting complex values to real discards the imaginary part
+  return array(a, dtype, copy=False, order=order)
+
+Field time usage:
+    connnecting chunks: 0.0649002 s
+         time stepping: 22.3969 s
+         communicating: 5.3126 s
+     outputting fields: 14.9715 s
+    Fourier transforming: 0.0209412 s
+       everything else: 5.2332 s
+

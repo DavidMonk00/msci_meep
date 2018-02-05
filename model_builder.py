@@ -7,29 +7,39 @@ import h5py
 import subprocess
 import random
 import string
+from materials_library import *
+import sys
 
-# cell = mp.Vector3(16, 8, 0)
-# geometry = []
-# sources = [mp.Source(mp.ContinuousSource(frequency=0.15),
-#             component=mp.Ez,
-#             center=mp.Vector3(-7,0))]
-# pml_layers = [mp.PML(1.0)]
-# resolution = 10
-# sim = mp.Simulation(cell_size=cell,
-#                     boundary_layers=pml_layers,
-#                     geometry=geometry,
-#                     sources=sources,
-#                     resolution=resolution)
-# sim.run(mp.at_beginning(mp.output_epsilon),
-#         mp.at_end(mp.output_efield_z),
-#         until=200)
+vals = []
+def get_slice(sim):
+    center = mp.Vector3(14,0)
+    size = mp.Vector3(0, 0)
+    vals.append(sim.get_field_point(mp.Ez,center))
+
+vals2 = []
+def get_slice_start(sim):
+    center = mp.Vector3(-14,0)
+    size = mp.Vector3(0, 0)
+    vals2.append(sim.get_field_point(mp.Ez,center))
+
+vals3 = []
+def get_slice_middle(sim):
+    center = mp.Vector3(0,0)
+    size = mp.Vector3(0, 0)
+    vals3.append(sim.get_field_point(mp.Ez,center))
+
+w_vals = []
+def get_waveguide_slice(sim):
+    center = mp.Vector3(0,0)
+    size = mp.Vector3(32, 0)
+    w_vals.append(sim.get_array(center=center, size=size, component=mp.Ez))
 
 class Model:
-    def __init__(self, cell_x, cell_y, cell_z=0,output_directory='temp'):
+    def __init__(self, cell_x, cell_y, cell_z=0,dpml=1.0,output_directory='temp'):
         self.cell = mp.Vector3(cell_x,cell_y,cell_z)
         self.geometry = []
         self.sources = []
-        self.pml_layers = [mp.PML(1.0)]
+        self.pml_layers = [mp.PML(dpml)]
         self.output_directory = output_directory
     def addGeometry(self, geometry):
         self.geometry.append(geometry)
@@ -58,12 +68,14 @@ class Model:
     def addSource(self,source):
         self.sources.append(source)
     def simulate(self, resolution=10, until=200, output_directory='temp'):
+        self.vals = []
         self.output_directory = output_directory
         self.sim = mp.Simulation(cell_size = self.cell,
                                  boundary_layers = self.pml_layers,
                                  geometry = self.geometry,
                                  sources = self.sources,
-                                 resolution = resolution)
+                                 resolution = resolution,
+                                 symmetries=[mp.Mirror(mp.Y)])
         try:
             os.mkdir(self.output_directory)
         except OSError:
@@ -71,16 +83,63 @@ class Model:
         self.sim.use_output_directory(self.output_directory)
         self.sim.run(mp.at_beginning(mp.output_epsilon),
                      mp.to_appended("ez", mp.at_every(2, mp.output_efield_z)),
+                     mp.at_every(2,get_slice),
+                     mp.at_every(2,get_slice_start),
+                     mp.at_every(2,get_slice_middle),
+                     mp.at_every(2,get_waveguide_slice),
                      until=until)
 
+def waveguide2D(length):
+    width = 0.5
+    period = 20
+    M = Model(32, 16,dpml=0.2,output_directory='waveguide2D')
+    M.addGeometry(mp.Block(mp.Vector3(1e20, 1e20, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=1)))
+    M.addGeometry(mp.Block(mp.Vector3(1e20, width, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=100)))
+    M.addGeometry(mp.Block(mp.Vector3(2, width, 1e20),center=mp.Vector3(-length/2 - 1, 0),material=mp.Medium(epsilon=1)))
+    M.addGeometry(mp.Block(mp.Vector3(2, width, 1e20),center=mp.Vector3(length/2 + 1, 0),material=mp.Medium(epsilon=1)))
+    M.addGeometry(mp.Block(mp.Vector3(length, width, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=50)))
+    # M.viewGeometry()
+    M.addSource(mp.Source(mp.ContinuousSource(wavelength=period,width=10,end_time=mp.inf),
+                          component=mp.Ez,
+                          center=mp.Vector3(-15,0),
+                          size=mp.Vector3(0,width)))
+    M.simulate(resolution=10,until=125*period,output_directory='waveguide2D')
+    plt.plot(vals3)
+    plt.plot(vals2)
+    plt.plot(vals)
+    n = "l_%.2f.png"%(length)
+    plt.savefig(n)
+    with open("Q.txt", 'a') as f:
+        f.write("%.2f,"%(length)+str(max(np.real(np.array(vals3[-100:])))/max(np.real(np.array(vals2[-100:]))))+"\n")
+    # plt.figure(dpi=100)
+    # plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
+    # plt.axis('off')
+    # plt.show()
+
+def ringResonator():
+    n = 3.4  # index of waveguide
+    w = 5  # width of waveguide
+    r = 5  # inner radius of ring
+    pad = 4  # padding between waveguide and edge of PML
+    dpml = 2  # thickness of PML
+    sxy = 2 * (r + w + pad + dpml)  # cell size
+
+    M = Model(sxy, sxy, dpml=2.0)
+    M.addGeometry(mp.Cylinder(radius=r + w, material=Ag))
+    M.addGeometry(mp.Cylinder(radius=r))
+    M.addSource(mp.Source(mp.GaussianSource(0.02, fwidth=0.01), mp.Ez, mp.Vector3(0.1)))
+    M.simulate(until=1500,output_directory='temp')
+    # M.sim.run(mp.at_beginning(mp.output_epsilon),
+    #           mp.after_sources(mp.Harminv(mp.Ez, mp.Vector3(r + 0.1), 0.15, 0.1)),
+    #           until_after_sources=300)
+
 def main():
-    M = Model(64, 32)
-    M.addGeometry(mp.Block(mp.Vector3(1e20, 1e20, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=12)))
-    M.addGeometry(mp.Block(mp.Vector3(1e20, 20, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=1)))
-    M.addGeometry(mp.Block(mp.Vector3(1e20, 10, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=12)))
-    #M.viewGeometry()
-    M.addSource(mp.Source(mp.ContinuousSource(frequency=0.1,width=20),component=mp.Ez,center=mp.Vector3(-31,0),size=mp.Vector3(0,10)))
-    M.simulate(resolution=20,until=600)
+    length = 12.5
+    if (len(sys.argv) > 1):
+        length = float(sys.argv[1])
+    print length
+    waveguide2D(length)
+    # ringResonator()
 
 if (__name__ == '__main__'):
     main()
