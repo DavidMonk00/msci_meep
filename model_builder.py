@@ -8,18 +8,25 @@ import subprocess
 import random
 import string
 from materials_library import *
+import sys
 
 vals = []
 def get_slice(sim):
-    center = mp.Vector3(15,0)
+    center = mp.Vector3(14,0)
     size = mp.Vector3(0, 0)
     vals.append(sim.get_field_point(mp.Ez,center))
 
 vals2 = []
 def get_slice_start(sim):
-    center = mp.Vector3(-15,0)
+    center = mp.Vector3(-14,0)
     size = mp.Vector3(0, 0)
     vals2.append(sim.get_field_point(mp.Ez,center))
+
+vals3 = []
+def get_slice_middle(sim):
+    center = mp.Vector3(0,0)
+    size = mp.Vector3(0, 0)
+    vals3.append(sim.get_field_point(mp.Ez,center))
 
 w_vals = []
 def get_waveguide_slice(sim):
@@ -67,7 +74,8 @@ class Model:
                                  boundary_layers = self.pml_layers,
                                  geometry = self.geometry,
                                  sources = self.sources,
-                                 resolution = resolution)
+                                 resolution = resolution,
+                                 symmetries=[mp.Mirror(mp.Y)])
         try:
             os.mkdir(self.output_directory)
         except OSError:
@@ -77,31 +85,36 @@ class Model:
                      mp.to_appended("ez", mp.at_every(2, mp.output_efield_z)),
                      mp.at_every(2,get_slice),
                      mp.at_every(2,get_slice_start),
+                     mp.at_every(2,get_slice_middle),
                      mp.at_every(2,get_waveguide_slice),
                      until=until)
 
-def waveguide2D():
-    width = 4
-    length = 10.0
-    period = 50
+def waveguide2D(length):
+    width = 0.5
+    period = 20
     M = Model(32, 16,dpml=0.2,output_directory='waveguide2D')
     M.addGeometry(mp.Block(mp.Vector3(1e20, 1e20, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=1)))
     M.addGeometry(mp.Block(mp.Vector3(1e20, width, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=100)))
     M.addGeometry(mp.Block(mp.Vector3(2, width, 1e20),center=mp.Vector3(-length/2 - 1, 0),material=mp.Medium(epsilon=1)))
     M.addGeometry(mp.Block(mp.Vector3(2, width, 1e20),center=mp.Vector3(length/2 + 1, 0),material=mp.Medium(epsilon=1)))
+    M.addGeometry(mp.Block(mp.Vector3(length, width, 1e20),center=mp.Vector3(0, 0),material=mp.Medium(epsilon=50)))
     # M.viewGeometry()
-    M.addSource(mp.Source(mp.ContinuousSource(wavelength=period,width=10,end_time=20*period),
+    M.addSource(mp.Source(mp.ContinuousSource(wavelength=period,width=10,end_time=mp.inf),
                           component=mp.Ez,
                           center=mp.Vector3(-15,0),
                           size=mp.Vector3(0,width)))
-    M.simulate(resolution=20,until=20*period,output_directory='waveguide2D')
-    plt.plot(vals)
+    M.simulate(resolution=10,until=125*period,output_directory='waveguide2D')
+    plt.plot(vals3)
     plt.plot(vals2)
-    plt.show()
-    plt.figure(dpi=100)
-    plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
-    plt.axis('off')
-    plt.show()
+    plt.plot(vals)
+    n = "l_%.2f.png"%(length)
+    plt.savefig(n)
+    with open("Q.txt", 'a') as f:
+        f.write("%.2f,"%(length)+str(max(np.real(np.array(vals3[-100:])))/max(np.real(np.array(vals2[-100:]))))+"\n")
+    # plt.figure(dpi=100)
+    # plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
+    # plt.axis('off')
+    # plt.show()
 
 def ringResonator():
     n = 3.4  # index of waveguide
@@ -121,7 +134,11 @@ def ringResonator():
     #           until_after_sources=300)
 
 def main():
-    waveguide2D()
+    length = 12.5
+    if (len(sys.argv) > 1):
+        length = float(sys.argv[1])
+    print length
+    waveguide2D(length)
     # ringResonator()
 
 if (__name__ == '__main__'):
