@@ -1,10 +1,20 @@
-/home/david/.conda/envs/mp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+
+**
+** successfully loaded python MPI module (mpi4py)
+**
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
   from ._conv import register_converters as _register_converters
-12.49
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+2.03125
 -----------
 Initializing structure...
 Halving computational cell along direction y
-time for set_epsilon = 0.896401 s
+time for set_epsilon = 0.40086 s
 Working in 2D dimensions.
 Computational cell is 32 x 8.2 x 0 with resolution 10
      block, center = (0,0,0)
@@ -15,64 +25,58 @@ Computational cell is 32 x 8.2 x 0 with resolution 10
           size (1e+20,0.5,1e+20)
           axes (1,0,0), (0,1,0), (0,0,1)
           dielectric constant epsilon diagonal = (100,100,100)
-     block, center = (-7.245,0,0)
-          size (2,0.5,1e+20)
+     block, center = (-7.23562,0,0)
+          size (2.03125,0.5,1e+20)
           axes (1,0,0), (0,1,0), (0,0,1)
           dielectric constant epsilon diagonal = (1,1,1)
-     block, center = (7.245,0,0)
-          size (2,0.5,1e+20)
+     block, center = (7.23562,0,0)
+          size (2.03125,0.5,1e+20)
           axes (1,0,0), (0,1,0), (0,0,1)
           dielectric constant epsilon diagonal = (1,1,1)
      block, center = (0,0,0)
-          size (12.49,0.5,1e+20)
+          size (12.44,0.5,1e+20)
           axes (1,0,0), (0,1,0), (0,0,1)
           dielectric constant epsilon diagonal = (50,50,50)
-time for set_epsilon = 0.100471 s
+time for set_epsilon = 0.052946 s
 -----------
 Meep: using output directory 'waveguide2D'
 creating output file "waveguide2D/model_builder-eps-000000.00.h5"...
 creating output file "waveguide2D/model_builder-ez.h5"...
-Meep progress: 176.0/2500.0 = 7.0% done in 4.0s, 53.1s to go
-on time step 3520 (time=176), 0.00113808 s/step
-Meep progress: 356.0/2500.0 = 14.2% done in 8.0s, 48.3s to go
-on time step 7120 (time=356), 0.00111151 s/step
-Meep progress: 536.0/2500.0 = 21.4% done in 12.0s, 44.1s to go
-on time step 10720 (time=536), 0.00111145 s/step
-Meep progress: 690.0/2500.0 = 27.6% done in 16.0s, 42.1s to go
-on time step 13800 (time=690), 0.00130604 s/step
-Meep progress: 814.0/2500.0 = 32.6% done in 20.0s, 41.5s to go
-on time step 16280 (time=814), 0.00161384 s/step
-Meep progress: 920.0/2500.0 = 36.8% done in 24.1s, 41.3s to go
-on time step 18400 (time=920), 0.0019003 s/step
-Meep progress: 1034.0/2500.0 = 41.4% done in 28.1s, 39.8s to go
-on time step 20680 (time=1034), 0.00176285 s/step
-Meep progress: 1172.0/2500.0 = 46.9% done in 32.1s, 36.4s to go
-on time step 23440 (time=1172), 0.00145501 s/step
-Meep progress: 1326.0/2500.0 = 53.0% done in 36.1s, 32.0s to go
-on time step 26520 (time=1326), 0.00130441 s/step
-Meep progress: 1492.0/2500.0 = 59.7% done in 40.1s, 27.1s to go
-on time step 29840 (time=1492), 0.00120687 s/step
-Meep progress: 1665.0/2500.0 = 66.6% done in 44.1s, 22.1s to go
-on time step 33300 (time=1665), 0.00115621 s/step
-Meep progress: 1829.9/2500.0 = 73.2% done in 48.1s, 17.6s to go
-on time step 36598 (time=1829.9), 0.00121294 s/step
-Meep progress: 1997.65/2500.0 = 79.9% done in 52.1s, 13.1s to go
-on time step 39953 (time=1997.65), 0.00119255 s/step
-Meep progress: 2156.15/2500.0 = 86.2% done in 56.1s, 9.0s to go
-on time step 43123 (time=2156.15), 0.00126193 s/step
-Meep progress: 2296.0/2500.0 = 91.8% done in 60.2s, 5.3s to go
-on time step 45920 (time=2296), 0.00143557 s/step
-Meep progress: 2469.15/2500.0 = 98.8% done in 64.2s, 0.8s to go
-on time step 49383 (time=2469.15), 0.00115509 s/step
-/home/david/.conda/envs/mp/lib/python2.7/site-packages/numpy/core/numeric.py:492: ComplexWarning: Casting complex values to real discards the imaginary part
-  return array(a, dtype, copy=False, order=order)
+Meep progress: 221.05/2500.0 = 8.8% done in 4.0s, 41.3s to go
+on time step 4440 (time=222), 0.000903213 s/step
+Meep progress: 468.0/2500.0 = 18.7% done in 8.0s, 34.8s to go
+on time step 9391 (time=469.55), 0.00080794 s/step
+Meep progress: 694.75/2500.0 = 27.8% done in 12.0s, 31.2s to go
+on time step 13905 (time=695.25), 0.000887243 s/step
+Meep progress: 938.75/2500.0 = 37.5% done in 16.0s, 26.6s to go
+on time step 18794 (time=939.7), 0.000819226 s/step
+Meep progress: 1144.0/2500.0 = 45.8% done in 20.0s, 23.7s to go
+on time step 22914 (time=1145.7), 0.000970876 s/step
+Meep progress: 1366.4/2500.0 = 54.7% done in 24.0s, 19.9s to go
+on time step 27329 (time=1366.45), 0.00090607 s/step
+Meep progress: 1614.0/2500.0 = 64.6% done in 28.1s, 15.4s to go
+on time step 32280 (time=1614), 0.000811262 s/step
+Meep progress: 1860.0/2500.0 = 74.4% done in 32.1s, 11.0s to go
+on time step 37200 (time=1860), 0.000813938 s/step
+Meep progress: 2104.0/2500.0 = 84.2% done in 36.1s, 6.8s to go
+on time step 42080 (time=2104), 0.000820258 s/step
+Meep progress: 2354.0/2500.0 = 94.2% done in 40.1s, 2.5s to go
+on time step 47080 (time=2354), 0.000803303 s/step
 run 0 finished at t = 2500.0 (50000 timesteps)
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/numpy/core/numeric.py:492: ComplexWarning: Casting complex values to real discards the imaginary part
+  return array(a, dtype, copy=False, order=order)
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/numpy/core/numeric.py:492: ComplexWarning: Casting complex values to real discards the imaginary part
+  return array(a, dtype, copy=False, order=order)
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/numpy/core/numeric.py:492: ComplexWarning: Casting complex values to real discards the imaginary part
+  return array(a, dtype, copy=False, order=order)
+/home/david/.conda/envs/pmp/lib/python2.7/site-packages/numpy/core/numeric.py:492: ComplexWarning: Casting complex values to real discards the imaginary part
+  return array(a, dtype, copy=False, order=order)
 
 Field time usage:
-    connnecting chunks: 0.0406709 s
-         time stepping: 31.6801 s
-         communicating: 3.95426 s
-     outputting fields: 27.0182 s
-    Fourier transforming: 0.0161777 s
-       everything else: 2.1365 s
+    connnecting chunks: 0.0672253 s
+         time stepping: 19.092 s
+         communicating: 4.77899 s
+     outputting fields: 13.7267 s
+    Fourier transforming: 0.0190826 s
+       everything else: 4.85569 s
 
