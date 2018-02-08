@@ -103,18 +103,18 @@ def waveguide2D(length):
                           component=mp.Ez,
                           center=mp.Vector3(-15,0),
                           size=mp.Vector3(0,width)))
-    M.simulate(resolution=10,until=125*period,output_directory='waveguide2D')
+    M.simulate(resolution=10,until=300*period,output_directory='waveguide2D')
     plt.plot(vals3)
     plt.plot(vals2)
-    plt.plot(vals)
-    n = "l_%.2f.png"%(length)
+    # plt.plot(vals)
+    n = "img/l_%.2f.png"%(length)
     plt.savefig(n)
     with open("Q.txt", 'a') as f:
         f.write("%.2f,"%(length)+str(max(np.real(np.array(vals3[-100:])))/max(np.real(np.array(vals2[-100:]))))+"\n")
-    # plt.figure(dpi=100)
-    # plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
-    # plt.axis('off')
-    # plt.show()
+    plt.figure(dpi=100)
+    plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
+    plt.axis('off')
+    plt.show()
 
 def ringResonator():
     n = 3.4  # index of waveguide
