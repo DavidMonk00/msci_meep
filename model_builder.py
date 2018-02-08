@@ -107,10 +107,10 @@ def waveguide2D(length):
     plt.plot(vals3)
     plt.plot(vals2)
     plt.plot(vals)
-    n = "l_%.2f.png"%(length)
+    n = "img/l_%.3f.png"%(length)
     plt.savefig(n)
     with open("Q.txt", 'a') as f:
-        f.write("%.2f,"%(length)+str(max(np.real(np.array(vals3[-100:])))/max(np.real(np.array(vals2[-100:]))))+"\n")
+        f.write("%.3f,"%(length)+str(max(np.real(np.array(vals3[-100:])))/max(np.real(np.array(vals2[-100:]))))+"\n")
     # plt.figure(dpi=100)
     # plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
     # plt.axis('off')
