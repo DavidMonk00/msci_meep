@@ -121,7 +121,7 @@ def waveguide2D(length=12.44,impedence_width=1.969,sweep=True):
                               center=mp.Vector3(-dims[0]/2 + 0.5,0)))
         M.simulateSweep(fcen,df,resolution=10,until=100*period,output_directory='waveguide2D')
     else:
-        M.addSource(mp.Source(mp.ContinuousSource(frequency=0.105267687751,width=5,end_time=25*period),
+        M.addSource(mp.Source(mp.ContinuousSource(frequency=0.100877648186,width=5,end_time=25*period),
                               component=mp.Ez,
                               center=mp.Vector3(-dims[0]/2 + 0.5,0),
                               size=mp.Vector3(0,width)))
@@ -157,12 +157,12 @@ def ringResonator():
     #           until_after_sources=300)
 
 def main():
-    length = 2.0
+    length = 10.0
     if (len(sys.argv) > 1):
         length = float(sys.argv[1])
         i_w = float(sys.argv[2])
     print length
-    waveguide2D(length=length, impedence_width=i_w)
+    waveguide2D(length=length, impedence_width=i_w, sweep=False)
     # ringResonator()
 
 if (__name__ == '__main__'):
