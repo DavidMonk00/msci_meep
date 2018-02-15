@@ -1,3 +1,4 @@
+from __future__ import division
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import meep as mp
@@ -49,7 +50,7 @@ class Model:
         self.geometry.append(geometry)
     def viewGeometry(self,resolution=10):
         tmp = 'eps_temp'#''.join(random.choice(string.ascii_lowercase) for _ in range(20))
-        #os.mkdir(tmp)
+        # os.mkdir(tmp)
         print self.cell
         sim = mp.Simulation(cell_size = self.cell,
                             dimensions=3,
@@ -59,7 +60,7 @@ class Model:
                             resolution = resolution
                             )
         sim.use_output_directory(tmp)
-        #sim.run(mp.at_beginning(mp.output_epsilon),until=1)
+        sim.run(mp.at_beginning(mp.output_epsilon),until=1)
         files = glob(tmp+"/*-eps-*.h5")
         for i in files:
             eps_h5file = h5py.File(i,'r')
@@ -83,8 +84,8 @@ class Model:
                                  boundary_layers = self.pml_layers,
                                  geometry = self.geometry,
                                  sources = self.sources,
-                                 resolution = resolution,
-                                 symmetries=[mp.Mirror(mp.Y)])
+                                 resolution = resolution)
+                                 # symmetries=[mp.Mirror(mp.Y)])
         try:
             os.mkdir(self.output_directory)
         except OSError:
@@ -102,48 +103,47 @@ class Model:
                                  boundary_layers = self.pml_layers,
                                  geometry = self.geometry,
                                  sources = self.sources,
-                                 resolution = resolution,
-                                 symmetries=[mp.Mirror(mp.Y),mp.Mirror(mp.X)])
+                                 resolution = resolution)
+                                 # symmetries=[mp.Mirror(mp.Y),mp.Mirror(mp.X)])
         self.sim.run(mp.after_sources(mp.Harminv(mp.Ez, mp.Vector3(1.0,0.0), fcen, df)),
                      until_after_sources=200)
 
-
-def waveguide2D(length=12.44,impedence_width=1.969,sweep=True):
+def waveguide3D(length=12.44,impedence_width=1.969,sweep=True):
     width = 0.5
-    period = 20
     fcen = 0.1
     df = 0.075
-    dims = (16,8,8)
-    M = Model(dims[0],dims[1],cell_z=dims[2],dpml=0.2,output_directory='waveguide2D')
+    dims = (16,4,4)
+    M = Model(dims[0],dims[1],cell_z=dims[2],dpml=0.2,output_directory='waveguide3D')
     M.addGeometry(mp.Block(mp.Vector3(1e20, 1e20, 1e20),center=mp.Vector3(0, 0, 0),material=mp.Medium(epsilon=1)))
     M.addGeometry(mp.Block(mp.Vector3(1e20, width, width),center=mp.Vector3(0, 0, 0),material=mp.Medium(epsilon=100)))
-    M.addGeometry(mp.Block(mp.Vector3(impedence_width, width, width),center=mp.Vector3(-length/2 - impedence_width/2, 0, 0),material=mp.Medium(epsilon=1)))
-    M.addGeometry(mp.Block(mp.Vector3(impedence_width, width, width),center=mp.Vector3(length/2 + impedence_width/2, 0, 0),material=mp.Medium(epsilon=1)))
-    M.addGeometry(mp.Block(mp.Vector3(length, width, width),center=mp.Vector3(0, 0, 0),material=mp.Medium(epsilon=50)))
+    # M.addGeometry(mp.Block(mp.Vector3(impedence_width, width, width),center=mp.Vector3(-length/2 - impedence_width/2, 0, 0),material=mp.Medium(epsilon=1)))
+    # M.addGeometry(mp.Block(mp.Vector3(impedence_width, width, width),center=mp.Vector3(length/2 + impedence_width/2, 0, 0),material=mp.Medium(epsilon=1)))
+    # M.addGeometry(mp.Block(mp.Vector3(length, width, width),center=mp.Vector3(0, 0, 0),material=mp.Medium(epsilon=50)))
     #M.viewGeometry()
     if (sweep):
         M.addSource(mp.Source(src=mp.GaussianSource(fcen, fwidth=df),
                               component=mp.Ez,
                               center=mp.Vector3(-dims[0]/2 + 0.5,0,0)))
-        M.simulateSweep(fcen,df,resolution=10,until=100*period,output_directory='waveguide2D')
+        M.simulateSweep(fcen,df,resolution=10,until=100/fcen,output_directory='waveguide3D')
     else:
-        M.addSource(mp.Source(mp.ContinuousSource(frequency=0.100877648186,width=5,end_time=25*period),
+        freq = 0.02
+        M.addSource(mp.Source(mp.ContinuousSource(frequency=freq,width=5,end_time=25/freq),
                               component=mp.Ez,
-                              center=mp.Vector3(-dims[0]/2 + 0.5,0,0),
-                              size=mp.Vector3(0,width,width)))
-        M.simulate(resolution=20,until=50*period,output_directory='waveguide2D')
-        plt.plot(vals2)
-        plt.plot(vals)
-        plt.plot(vals3)
-        plt.show()
-        # n = "img/l_%.3f.png"%(length)
-        # plt.savefig(n)
-        # with open("Q.txt", 'a') as f:
-        #     f.write("%f,"%(impedence_width)+str(max(np.real(np.array(vals3[-100:])))/max(np.real(np.array(vals2[-100:]))))+"\n")
-        plt.figure(dpi=100)
-        plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
-        plt.axis('off')
-        plt.show()
+                              center=mp.Vector3(-dims[0]/2 + 1,0,0),
+                              size=mp.Vector3(width,width,width)))
+        M.simulate(resolution=20,until=50/freq,output_directory='waveguide3D')
+        # plt.plot(vals2)
+        # plt.plot(vals)
+        # plt.plot(vals3)
+        # plt.show()
+        # # n = "img/l_%.3f.png"%(length)
+        # # plt.savefig(n)
+        # # with open("Q.txt", 'a') as f:
+        # #     f.write("%f,"%(impedence_width)+str(max(np.real(np.array(vals3[-100:])))/max(np.real(np.array(vals2[-100:]))))+"\n")
+        # plt.figure(dpi=100)
+        # plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
+        # plt.axis('off')
+        # plt.show()
 
 def ringResonator():
     n = 3.4  # index of waveguide
@@ -167,7 +167,7 @@ def main():
     if (len(sys.argv) > 1):
         length = float(sys.argv[1])
         i_w = float(sys.argv[2])
-    waveguide2D(length=length, impedence_width=i_w, sweep=False)
+    waveguide3D(length=length, impedence_width=i_w,sweep=False)
     # ringResonator()
 
 if (__name__ == '__main__'):
