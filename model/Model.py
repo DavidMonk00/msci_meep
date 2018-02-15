@@ -5,6 +5,28 @@ import meep as mp
 import h5py
 import numpy as np
 warnings.simplefilter(action='ignore', category=np.ComplexWarning)
+import os
+
+vals = [[],[],[],[]]
+def get_slice(sim):
+    center = mp.Vector3(7.5,0,0)
+    size = mp.Vector3(0, 0, 0)
+    vals[0].append(sim.get_field_point(mp.Ez,center))
+
+def get_slice_start(sim):
+    center = mp.Vector3(-7.5,0,0)
+    size = mp.Vector3(0, 0 ,0)
+    vals[1].append(sim.get_field_point(mp.Ez,center))
+
+def get_slice_middle(sim):
+    center = mp.Vector3(0,0,0)
+    size = mp.Vector3(0, 0, 0)
+    vals[2].append(sim.get_field_point(mp.Ez,center))
+
+def get_waveguide_slice(sim):
+    center = mp.Vector3(0,0,0)
+    size = mp.Vector3(1, 0, 0)
+    vals[3].append(sim.get_array(center=center, size=size, component=mp.Ez))
 
 class Model:
     def __init__(self, cell_x, cell_y, cell_z=0,dpml=1.0,output_directory='temp'):

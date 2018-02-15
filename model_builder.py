@@ -11,32 +11,9 @@ import h5py
 import subprocess
 import random
 import string
-from materials_library import *
 import sys
-
-vals = []
-def get_slice(sim):
-    center = mp.Vector3(7.5,0,0)
-    size = mp.Vector3(0, 0, 0)
-    vals.append(sim.get_field_point(mp.Ez,center))
-
-vals2 = []
-def get_slice_start(sim):
-    center = mp.Vector3(-7.5,0,0)
-    size = mp.Vector3(0, 0 ,0)
-    vals2.append(sim.get_field_point(mp.Ez,center))
-
-vals3 = []
-def get_slice_middle(sim):
-    center = mp.Vector3(0,0,0)
-    size = mp.Vector3(0, 0, 0)
-    vals3.append(sim.get_field_point(mp.Ez,center))
-
-w_vals = []
-def get_waveguide_slice(sim):
-    center = mp.Vector3(0,0,0)
-    size = mp.Vector3(1, 0, 0)
-    w_vals.append(sim.get_array(center=center, size=size, component=mp.Ez))
+from model.Model import Model
+from model.Model import vals
 
 def waveguide3D(length=12.44,impedence_width=1.969,sweep=True):
     width = 0.5
@@ -57,21 +34,21 @@ def waveguide3D(length=12.44,impedence_width=1.969,sweep=True):
         M.simulateSweep(fcen,df,resolution=10,until=100/fcen,output_directory='waveguide3D')
     else:
         freq = 0.02
-        M.addSource(mp.Source(mp.ContinuousSource(frequency=freq,width=5,end_time=25/freq),
+        M.addSource(mp.Source(mp.ContinuousSource(frequency=freq,width=5,end_time=2.5/freq),
                               component=mp.Ez,
                               center=mp.Vector3(-dims[0]/2 + 1,0,0),
                               size=mp.Vector3(width,width,width)))
-        M.simulate(resolution=20,until=50/freq,output_directory='waveguide3D')
-        # plt.plot(vals2)
-        # plt.plot(vals)
-        # plt.plot(vals3)
+        M.simulate(resolution=20,until=5/freq,output_directory='waveguide3D')
+        # plt.plot(vals[1])
+        # plt.plot(vals[0])
+        # plt.plot(vals[2])
         # plt.show()
         # # n = "img/l_%.3f.png"%(length)
         # # plt.savefig(n)
         # # with open("Q.txt", 'a') as f:
         # #     f.write("%f,"%(impedence_width)+str(max(np.real(np.array(vals3[-100:])))/max(np.real(np.array(vals2[-100:]))))+"\n")
         # plt.figure(dpi=100)
-        # plt.imshow(w_vals, interpolation='spline36', cmap='RdBu')
+        # plt.imshow(vals[3], interpolation='spline36', cmap='RdBu')
         # plt.axis('off')
         # plt.show()
 
