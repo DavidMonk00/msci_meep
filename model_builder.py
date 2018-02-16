@@ -5,15 +5,10 @@ import meep as mp
 import numpy as np
 warnings.simplefilter(action='ignore', category=np.ComplexWarning)
 from matplotlib import pyplot as plt
-import os
-from glob import glob
-import h5py
-import subprocess
-import random
-import string
 import sys
 from model.Model import Model
 from model.Model import vals
+from model.materials_library import *
 
 def waveguide3D(length=12.44,impedence_width=1.969,sweep=True):
     width = 0.5
@@ -69,13 +64,57 @@ def ringResonator():
     #           mp.after_sources(mp.Harminv(mp.Ez, mp.Vector3(r + 0.1), 0.15, 0.1)),
     #           until_after_sources=300)
 
+def rectangularCavity():
+    r = 1.25
+    l = 16
+    s = l*r
+    w = 4
+    d = l/16
+    dpml = s/16
+    sx = s
+    sy = s
+    fcen = 0.2
+    df = 0.3
+    res = 16
+    M = Model(sx,sy,dpml=dpml)
+    M.addGeometry(mp.Block(mp.Vector3(l,d,mp.inf),
+                           center=mp.Vector3(0,(w+d)/2,0),
+                           material=Cu))
+    M.addGeometry(mp.Block(mp.Vector3(l,d,mp.inf),
+                           center=mp.Vector3(0,-(w+d)/2,0),
+                           material=Cu))
+    M.addGeometry(mp.Block(mp.Vector3(d,w,mp.inf),
+                           center=mp.Vector3((l+d)/2,0,0),
+                           material=Cu))
+    M.addGeometry(mp.Block(mp.Vector3(d,w,mp.inf),
+                           center=mp.Vector3(-(l+d)/2,0,0),
+                           material=Cu))
+    M.addSource(mp.Source(mp.GaussianSource(fcen,fwidth=df),
+                          component=mp.Ez,
+                          center=mp.Vector3(0,0,0),
+                          size=mp.Vector3(0,0,0)))
+    M.simulate(resolution=res,until=1/fcen,output_directory='rectangularCavity')
+    # for i in vals[2]:
+    #     print imshow(vals[3], interpolation='spline36', cmap='RdBu')
+    plt.axis('off')
+    plt.show()
+    # x = [20,40,60,80,100,110,120,130,140,150]
+    # for i in x:
+    #     plt.plot(vals[2][:i])
+    #     plt.show()
+    plt.figure(dpi=100)
+    plt.imshow(vals[3][:80], interpolation='spline36', cmap='RdBu')
+    plt.axis('off')
+    plt.show()
+
 def main():
-    length = 10.0
-    if (len(sys.argv) > 1):
-        length = float(sys.argv[1])
-        i_w = float(sys.argv[2])
-    waveguide3D(length=length, impedence_width=i_w,sweep=False)
+    # length = 10.0
+    # if (len(sys.argv) > 1):
+    #     length = float(sys.argv[1])
+    #     i_w = float(sys.argv[2])
+    # waveguide3D(length=length, impedence_width=i_w)
     # ringResonator()
+    rectangularCavity()
 
 if (__name__ == '__main__'):
     main()
