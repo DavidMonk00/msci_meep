@@ -1,39 +1,49 @@
-
-**
-** successfully loaded python MPI module (mpi4py)
-**
-Traceback (most recent call last):
-  File "model_builder.py", line 169, in <module>
-    Traceback (most recent call last):
-  File "model_builder.py", line 169, in <module>
-    main()
-  File "model_builder.py", line 163, in main
-    i_w = float(sys.argv[2])
-IndexError: list index out of range
-Traceback (most recent call last):
-  File "model_builder.py", line 169, in <module>
-    main()
-  File "model_builder.py", line 163, in main
-    i_w = float(sys.argv[2])
-IndexError: list index out of range
-main()
-  File "model_builder.py", line 163, in main
-    i_w = float(sys.argv[2])
-IndexError: list index out of range
-Traceback (most recent call last):
-  File "model_builder.py", line 169, in <module>
-    main()
-  File "model_builder.py", line 163, in main
-    i_w = float(sys.argv[2])
-IndexError: list index out of range
--------------------------------------------------------
-Primary job  terminated normally, but 1 process returned
-a non-zero exit code.. Per user-direction, the job has been aborted.
--------------------------------------------------------
---------------------------------------------------------------------------
-mpirun detected that one or more processes exited with non-zero status, thus causing
-the job to be terminated. The first process to do so was:
-
-  Process name: [[11317,1],0]
-  Exit code:    1
---------------------------------------------------------------------------
+/home/david/.conda/envs/mp/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+12.4322
+-----------
+Initializing structure...
+Halving computational cell along direction y
+Working in 2D dimensions.
+Computational cell is 32 x 16 x 0 with resolution 10
+     block, center = (0,0,0)
+          size (1e+20,1e+20,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (1,1,1)
+     block, center = (0,0,0)
+          size (1e+20,0.5,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (100,100,100)
+     block, center = (-7.2161,0,0)
+          size (2,0.5,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (1,1,1)
+     block, center = (7.2161,0,0)
+          size (2,0.5,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (1,1,1)
+     block, center = (0,0,0)
+          size (12.4322,0.5,1e+20)
+          axes (1,0,0), (0,1,0), (0,0,1)
+          dielectric constant epsilon diagonal = (50,50,50)
+time for set_epsilon = 0.093591 s
+-----------
+Meep: using output directory 'waveguide2D'
+creating output file "waveguide2D/model_builder-eps-000000.00.h5"...
+creating output file "waveguide2D/model_builder-ez.h5"...
+Meep progress: 214.0/6000.0 = 3.6% done in 4.0s, 108.4s to go
+on time step 4283 (time=214.15), 0.00093405 s/step
+Meep progress: 436.0/6000.0 = 7.3% done in 8.0s, 102.3s to go
+on time step 8720 (time=436), 0.000902335 s/step
+Meep progress: 655.2/6000.0 = 10.9% done in 12.0s, 98.0s to go
+on time step 13104 (time=655.2), 0.000912454 s/step
+Meep progress: 876.0/6000.0 = 14.6% done in 16.0s, 93.8s to go
+on time step 17520 (time=876), 0.000908829 s/step
+Meep progress: 1094.15/6000.0 = 18.2% done in 20.0s, 89.8s to go
+on time step 21883 (time=1094.15), 0.000916836 s/step
+Meep progress: 1311.85/6000.0 = 21.9% done in 24.0s, 85.9s to go
+on time step 26237 (time=1311.85), 0.000918805 s/step
+Meep progress: 1533.0/6000.0 = 25.6% done in 28.0s, 81.7s to go
+on time step 30660 (time=1533), 0.000904472 s/step
+Meep progress: 1758.0/6000.0 = 29.3% done in 32.0s, 77.3s to go
+on time step 35160 (time=1758), 0.000889561 s/step
