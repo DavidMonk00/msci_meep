@@ -30,12 +30,12 @@
     (material metal)
   )
   (make block
-    (center 0 (/ (+ l d) 2))
+    (center (/ (+ l d) 2))
     (size d w infinity)
     (material metal)
   )
   (make block
-    (center 0 (/ (+ l d) -2))
+    (center (/ (+ l d) -2))
     (size d w infinity)
     (material metal)
   )
