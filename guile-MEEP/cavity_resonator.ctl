@@ -1,7 +1,7 @@
 ; Using a=100nm convention
 
 (define-param r 1.25)
-(define-param l 8)
+(define-param l 20)
 (define-param s (* l r))
 (define-param w 4)
 (define-param d (/ l 16))
@@ -73,3 +73,5 @@
 (run-until (/ 1 fcen)
   (to-appended "ez" (at-every (/ 1 fcen 20) output-efield-z))
 )
+
+(run-until 200 (at-every 1 (output-png Ez "-Zc bluered")))
