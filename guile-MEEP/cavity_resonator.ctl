@@ -59,19 +59,19 @@
 
 (use-output-directory)
 
-(run-sources+ 100
-  (at-beginning output-epsilon)
-  (after-sources
-    (harminv Ez
-      (vector3 0 0)
-      fcen
-      df
-    )
-  )
-)
-
-(run-until (/ 1 fcen)
-  (to-appended "ez" (at-every (/ 1 fcen 20) output-efield-z))
-)
+; (run-sources+ 100
+;   (at-beginning output-epsilon)
+;   (after-sources
+;     (harminv Ez
+;       (vector3 0 0)
+;       fcen
+;       df
+;     )
+;   )
+; )
+;
+; (run-until (/ 1 fcen)
+;   (to-appended "ez" (at-every (/ 1 fcen 20) output-efield-z))
+; )
 
 (run-until 200 (at-every 1 (output-png Ez "-Zc bluered")))
