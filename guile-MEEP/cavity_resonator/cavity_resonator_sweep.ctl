@@ -57,6 +57,18 @@
   (size 0 0)
 )))
 
-(use-output-directory)
+(run-sources+ 100
+  (after-sources
+    (harminv Ez
+      (vector3 0 0)
+      fcen
+      df
+    )
+  )
+)
 
-(run-until (/ 100 fcen) (at-every 1 (output-png Ez "-Zc bluered")))
+; (run-until (/ 1 fcen)
+;   (to-appended "ez" (at-every (/ 1 fcen 20) output-efield-z))
+; )
+
+; (run-until 200 (at-every 1 (output-png Ez "-Zc bluered")))
