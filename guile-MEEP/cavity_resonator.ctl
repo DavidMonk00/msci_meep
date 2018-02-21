@@ -1,7 +1,7 @@
 ; Using a=100nm convention
 
 (define-param r 1.25)
-(define-param l 16)
+(define-param l 8)
 (define-param s (* l r))
 (define-param w 4)
 (define-param d (/ l 16))
