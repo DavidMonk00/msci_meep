@@ -85,7 +85,7 @@ class Model:
             pass
         self.sim.use_output_directory(self.output_directory)
         self.sim.run(mp.at_beginning(mp.output_epsilon),
-                     mp.to_appended("ez", mp.at_every(1/(20), mp.output_efield_z)),
+                     mp.to_appended("ez", mp.at_every(1, mp.output_efield_z)),
                      mp.at_every(2,get_slice),
                      mp.at_every(2,get_slice_start),
                      mp.at_every(0.01,get_slice_middle),
