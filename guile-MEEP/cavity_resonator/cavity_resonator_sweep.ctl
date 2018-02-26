@@ -29,16 +29,16 @@
     (size l d infinity)
     (material metal)
   )
-  (make block
-    (center (/ (+ l d) 2))
-    (size d w infinity)
-    (material metal)
-  )
-  (make block
-    (center (/ (+ l d) -2))
-    (size d w infinity)
-    (material metal)
-  )
+  ; (make block
+  ;   (center (/ (+ l d) 2))
+  ;   (size d w infinity)
+  ;   (material metal)
+  ; )
+  ; (make block
+  ;   (center (/ (+ l d) -2))
+  ;   (size d w infinity)
+  ;   (material metal)
+  ; )
 ))
 
 (set! geometry geom)

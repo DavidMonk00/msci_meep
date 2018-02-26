@@ -11,6 +11,7 @@
 (define-param fcen 0.2)
 (define-param df 0.3)
 (define-param res 16)
+(define-param freq 0.14601667745703556)
 
 (set-param! resolution res)
 (set! eps-averaging? false)
@@ -29,16 +30,16 @@
     (size l d infinity)
     (material metal)
   )
-  (make block
-    (center (/ (+ l d) 2))
-    (size d w infinity)
-    (material metal)
-  )
-  (make block
-    (center (/ (+ l d) -2))
-    (size d w infinity)
-    (material metal)
-  )
+  ; (make block
+  ;   (center (/ (+ l d) 2))
+  ;   (size d w infinity)
+  ;   (material metal)
+  ; )
+  ; (make block
+  ;   (center (/ (+ l d) -2))
+  ;   (size d w infinity)
+  ;   (material metal)
+  ; )
 ))
 
 (set! geometry geom)
@@ -47,16 +48,19 @@
   (thickness dpml)
 )))
 
-(set! sources (list (make source
-  (src (make gaussian-src
-    (frequency fcen)
-    (fwidth df)
-  ))
-  (component Ez)
-  (center 0)
-  (size 0 0)
-)))
+(set! sources (list
+  (make source
+    (src (make continuous-src
+      (frequency freq)
+      (width 20)
+    ))
+    (component Ez)
+    (center 0)
+    (size 2 4)
+    (end-time (/ 10 freq))
+  )
+))
 
 (use-output-directory)
 
-(run-until (/ 100 fcen) (at-every 1 (output-png Ez "-Zc bluered")))
+(run-until (/ 100 freq) (at-every 1 (output-png Ez "-Zc bluered")))
