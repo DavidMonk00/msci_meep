@@ -53,11 +53,11 @@
     (src (make continuous-src
       (frequency freq)
       (width 20)
+      (end-time (/ 10 freq))
     ))
     (component Ez)
     (center 0)
     (size 2 4)
-    (end-time (/ 10 freq))
   )
 ))
 
