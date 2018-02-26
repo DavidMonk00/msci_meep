@@ -4,7 +4,7 @@
 (define-param sx w)
 (define-param sy l)
 (define-param sz h)
-(define-param stripH 1)
+(define-param stripH 0.5)
 (define-param stripW 2)
 (define-param dpml 0.1)
 (define-param res 10)
@@ -63,6 +63,6 @@
   )
 ))
 
-(run-until (/ 40 freq)
+(run-until (/ 50 freq)
   (to-appended "ez" (at-every 1 output-efield-z))
 )
