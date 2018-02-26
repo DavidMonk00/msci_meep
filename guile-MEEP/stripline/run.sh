@@ -1,4 +1,5 @@
-meep stripline.ctl # &> out.log
+NPROC=$(nproc)
+mpirun -np $NPROC meep-openmpi stripline.ctl # &> out.log
 cd stripline-out
 read frames <<<$( h5ls ez.h5 | awk '{split($6,a,"/");print a[1]}' )
 read y_len <<<$( h5ls ez.h5 | awk '{split($4,a,",");print a[1]}' )
