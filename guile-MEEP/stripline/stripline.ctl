@@ -7,7 +7,7 @@
 (define-param stripH 1)
 (define-param stripW 2)
 (define-param dpml 0.1)
-(define-param res 5)
+(define-param res 10)
 (define-param freq 0.1)
 
 (set-param! resolution res)
@@ -58,7 +58,7 @@
       (end-time (/ 10 freq))
     ))
     (component Ez)
-    (center 0 (- (/ l 2) 1) -2)
+    (center 0 (- (/ l 2) 2) -2)
     (size 0 0)
   )
 ))
