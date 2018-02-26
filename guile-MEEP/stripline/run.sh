@@ -1,3 +1,4 @@
+
 NPROC=$(nproc)
 mpirun -np $((NPROC/2)) meep-openmpi stripline.ctl # &> out.log
 cd stripline-out
@@ -16,4 +17,4 @@ for i in ./img/*.png; do
   convert $i -crop $((x-4))x$((y-4))+2+2 $i
 done
 python ../rename_images.py
-cat ./img/*.png | ffmpeg -y -f image2pipe -i - output.mp4 &> /dev/null
+cat ./img/*.png | ffmpeg -y -f image2pipe -i - output.mkv # &> /dev/null
