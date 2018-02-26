@@ -1,4 +1,4 @@
-# meep stripline.ctl &> out.log
+meep stripline.ctl &> out.log
 cd stripline-out
 read frames <<<$( h5ls ez.h5 | awk '{split($6,a,"/");print a[1]}' )
 frames=$(($frames-1))
