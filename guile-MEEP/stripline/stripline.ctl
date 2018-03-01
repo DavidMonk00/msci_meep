@@ -20,7 +20,7 @@
 (define geom (list
   ; Substrate dielectric
   (make block
-    (center 0 0 (/ Zdim 4))
+    (center 0 0 (/ Zdim -4))
     (size infinity infinity (/ Zdim 2))
     (material (make dielectric (epsilon 12)))
   )
