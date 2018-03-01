@@ -7,7 +7,7 @@
 (define-param stripH 0.5)
 (define-param stripW 2)
 (define-param dpml 0.5)
-(define-param res 16)
+(define-param res 8)
 (define-param freq 0.1)
 
 (set-param! resolution res)
@@ -56,7 +56,7 @@
     (src (make continuous-src
       (frequency freq)
       (width 20)
-      (end-time (/ 10 freq))
+      (end-time (/ 20 freq))
     ))
     (component Ez)
     (center 0 (- (/ l 6) (/ l 2)) 3)
