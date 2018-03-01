@@ -1,5 +1,10 @@
-
 NPROC=$(nproc)
+echo "Setting variables..."
+if [[ $# -eq 0 ]] ; then
+    echo 'ERROR: No resolution given, please enter resolution for simulation as argument.'
+    exit 0
+fi
+sed -i "s/param res .*)/param res $1)/g" ./stripline.ctl
 echo "Running MEEP..."
 mpirun -np $((NPROC/2)) meep-openmpi stripline.ctl # &> out.log
 

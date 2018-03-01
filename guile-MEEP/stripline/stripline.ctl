@@ -7,7 +7,7 @@
 (define-param stripH 0.5)
 (define-param stripW 2)
 (define-param dpml 0.5)
-(define-param res 8)
+(define-param res 6)
 (define-param freq 0.1)
 
 (set-param! resolution res)
