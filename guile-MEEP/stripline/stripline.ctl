@@ -65,7 +65,7 @@
   )
 ))
 
-(run-until (/ 1 freq)
+(run-until (/ 40 freq)
   (at-beginning output-epsilon)
   (to-appended "ez" (at-every 1 output-efield-z))
 )
