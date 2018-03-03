@@ -5,19 +5,19 @@ if [[ $# -eq 0 ]] ; then
     echo 'ERROR: No resolution given, please enter resolution for simulation as argument.'
     exit 0
 fi
-sed -i "s/param res .*)/param res $1)/g" ./stripline.ctl
+sed -i "s/param res .*)/param res $1)/g" ./stripline-current.ctl
 
 echo "Running MEEP..."
-mpirun -np $((NPROC/2)) meep-openmpi stripline.ctl # &> out.log
+mpirun -np $((NPROC/2)) meep-openmpi stripline-current.ctl # &> out.log
 
-cd stripline-out
+cd stripline-current-out
 
 # Create y slice video
 echo "Creating y-slice..."
-read frames <<<$( h5ls ez.h5 | awk '{split($6,a,"/");print a[1]}' )
-read y_len <<<$( h5ls ez.h5 | awk '{split($4,a,",");print a[1]}' )
+read frames <<<$( h5ls ey.h5 | awk '{split($6,a,"/");print a[1]}' )
+read y_len <<<$( h5ls ey.h5 | awk '{split($4,a,",");print a[1]}' )
 y_len=$((($y_len-1)*4/5))
-h5topng -y $y_len -t 0:$((frames-1)) -R -Zc dkbluered -a yarg ez.h5 # -m -0.02 -M 0.02
+h5topng -y $y_len -t 0:$((frames-1)) -R -Zc dkbluered -a yarg ey.h5 # -m -0.02 -M 0.02
 rm -rf img/y-slice
 mkdir -p img/y-slice
 mv *.png ./img/y-slice/
@@ -31,10 +31,10 @@ cat ./img/y-slice/*.png | ffmpeg -y -f image2pipe -i - output_y_slice.mkv &> /de
 
 # Create z-slice at source
 echo "Creating z-slice..."
-read frames <<<$( h5ls ez.h5 | awk '{split($6,a,"/");print a[1]}' )
-read z_len <<<$( h5ls ez.h5 | awk '{split($5,a,",");print a[1]}' )
+read frames <<<$( h5ls ey.h5 | awk '{split($6,a,"/");print a[1]}' )
+read z_len <<<$( h5ls ey.h5 | awk '{split($5,a,",");print a[1]}' )
 z_len=$((($z_len-1)*7/10))
-h5topng -z $z_len -t 0:$((frames-1)) -R -Zc dkbluered -a yarg ez.h5 # -m -0.002 -M 0.002
+h5topng -z $z_len -t 0:$((frames-1)) -R -Zc dkbluered -a yarg ey.h5 # -m -0.002 -M 0.002
 rm -rf img/z-slice
 mkdir -p img/z-slice
 mv *.png ./img/z-slice/

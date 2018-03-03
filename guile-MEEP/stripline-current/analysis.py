@@ -22,7 +22,7 @@ def main():
     for i in dirs:
         if ("-out" in i):
             output_directory = i
-    f = h5py.File(i + "ez.h5")["ez"]
+    f = h5py.File(i + "ey.h5")["ey"]
     print f.shape
     #t = [0,50,100,150,200,250,300,350]
     # for i in t:
