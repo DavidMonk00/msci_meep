@@ -32,12 +32,12 @@
   )
   ; ground plates
   (make block
-    (center (/ (- Xdim (+ (* 2 W) S)) 4) 0 (/ t 2))
+    (center (/ (+ Xdim (+ (* 2 W) S)) -4) 0 (/ t 2))
     (size (/ (- Xdim (+ (* 2 W) S)) 2) infinity t)
     (material metal)
   )
   (make block
-    (center (/ (- Xdim (+ (* 2 W) S)) -4) 0 (/ t 2))
+    (center (/ (+ Xdim (+ (* 2 W) S)) 4) 0 (/ t 2))
     (size (/ (- Xdim (+ (* 2 W) S)) 2) infinity t)
     (material metal)
   )
