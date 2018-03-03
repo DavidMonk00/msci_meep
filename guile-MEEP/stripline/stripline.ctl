@@ -1,4 +1,4 @@
-(define-param Xdim 10)
+(define-param Xdim 20)
 (define-param Ydim 60)
 (define-param Zdim 10)
 (define-param sx Xdim)
@@ -8,7 +8,7 @@
 (define-param S 2)        ; Thickness of centre strip
 (define-param W 2)        ; Width of gap
 (define-param dpml 0.5)
-(define-param res 8)
+(define-param res 5)
 (define-param freq 0.1)
 
 (set-param! resolution res)
@@ -57,7 +57,7 @@
     (src (make continuous-src
       (frequency freq)
       (width 20)
-      (end-time (/ 20 freq))
+      (end-time (/ 40 freq))
     ))
     (component Ez)
     (center 0 (- (/ Ydim 6) (/ Ydim 2)) 3)
@@ -65,6 +65,7 @@
   )
 ))
 
-(run-until (/ 40 freq)
+(run-until (/ 1 freq)
+  (at-beginning output-epsilon)
   (to-appended "ez" (at-every 1 output-efield-z))
 )
