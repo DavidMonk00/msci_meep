@@ -24,7 +24,7 @@ mv *.png ./img/y-slice/
 for i in ./img/y-slice/*.png; do
   read x <<<$( identify $i | awk '{split($3,a,"x");print a[1]}' )
   read y <<<$( identify $i | awk '{split($3,a,"x");print a[2]}' )
-  convert $i -crop $((x-4))x$((y-4))+2+2 $i
+  convert $i -crop $((x-1))x$((y-1))+1+1 $i
 done
 python ../rename_images.py
 cat ./img/y-slice/*.png | ffmpeg -y -f image2pipe -i - output_y_slice.mkv &> /dev/null
@@ -41,7 +41,7 @@ mv *.png ./img/z-slice/
 for i in ./img/z-slice/*.png; do
   read x <<<$( identify $i | awk '{split($3,a,"x");print a[1]}' )
   read y <<<$( identify $i | awk '{split($3,a,"x");print a[2]}' )
-  convert $i -crop $((x-4))x$((y-4))+2+2 $i
+  convert $i -crop $((x-1))x$((y-1))+1+1 $i
 done
 python ../rename_images.py
 cat ./img/z-slice/*.png | ffmpeg -y -f image2pipe -i - output_z_slice.mkv &> /dev/null
