@@ -46,3 +46,7 @@ done
 python ../rename_images.py
 cat ./img/z-slice/*.png | ffmpeg -y -f image2pipe -i - output_z_slice.mkv &> /dev/null
 echo "Done."
+
+cd ..
+
+python analysis.py
