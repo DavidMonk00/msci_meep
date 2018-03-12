@@ -56,7 +56,7 @@
   (make source
     (src (make continuous-src
       (frequency freq)
-      (width 20)
+      ;(width 20)
       (end-time (/ 40 freq))
     ))
     (component Ez)
@@ -66,7 +66,7 @@
   (make source
     (src (make continuous-src
       (frequency freq)
-      (width 20)
+      ;(width 20)
       (start-time (/ 0.5 freq))
       (end-time (/ 40 freq))
     ))
@@ -77,12 +77,12 @@
   (make source
     (src (make continuous-src
       (frequency freq)
-      (width 20)
+      ;(width 20)
       (start-time (/ 0.5 freq))
       (end-time (/ 40 freq))
     ))
     (component Ez)
-    (center (/ (+ Xdim (+ (* 2 W) S)) 44) 0 (/ t 2))
+    (center (/ (+ Xdim (+ (* 2 W) S)) 4) 0 (/ t 2))
     (size (/ (- Xdim (+ (* 2 W) S)) 2) Ydim t)
   )
 ))
