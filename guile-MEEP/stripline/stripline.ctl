@@ -24,23 +24,23 @@
     (size infinity infinity (/ Zdim 2))
     (material (make dielectric (epsilon 12)))
   )
-  ; centre strip
-  (make block
-    (center 0 0 (/ t 2))
-    (size S infinity t)
-    (material metal)
-  )
-  ; ground plates
-  (make block
-    (center (/ (+ Xdim (+ (* 2 W) S)) -4) 0 (/ t 2))
-    (size (/ (- Xdim (+ (* 2 W) S)) 2) infinity t)
-    (material metal)
-  )
-  (make block
-    (center (/ (+ Xdim (+ (* 2 W) S)) 4) 0 (/ t 2))
-    (size (/ (- Xdim (+ (* 2 W) S)) 2) infinity t)
-    (material metal)
-  )
+  ; ; centre strip
+  ; (make block
+  ;   (center 0 0 (/ t 2))
+  ;   (size S infinity t)
+  ;   (material metal)
+  ; )
+  ; ; ground plates
+  ; (make block
+  ;   (center (/ (+ Xdim (+ (* 2 W) S)) -4) 0 (/ t 2))
+  ;   (size (/ (- Xdim (+ (* 2 W) S)) 2) infinity t)
+  ;   (material metal)
+  ; )
+  ; (make block
+  ;   (center (/ (+ Xdim (+ (* 2 W) S)) 4) 0 (/ t 2))
+  ;   (size (/ (- Xdim (+ (* 2 W) S)) 2) infinity t)
+  ;   (material metal)
+  ; )
 ))
 
 (set! geometry geom)
@@ -60,8 +60,30 @@
       (end-time (/ 40 freq))
     ))
     (component Ez)
-    (center 0 (- (/ Ydim 6) (/ Ydim 2)) 3)
-    (size S 0 0)
+    (center 0 0 (/ t 2))
+    (size S Ydim t)
+  )
+  (make source
+    (src (make continuous-src
+      (frequency freq)
+      (width 20)
+      (start-time (/ 0.5 freq))
+      (end-time (/ 40 freq))
+    ))
+    (component Ez)
+    (center (/ (+ Xdim (+ (* 2 W) S)) -4) 0 (/ t 2))
+    (size (/ (- Xdim (+ (* 2 W) S)) 2) Ydim t)
+  )
+  (make source
+    (src (make continuous-src
+      (frequency freq)
+      (width 20)
+      (start-time (/ 0.5 freq))
+      (end-time (/ 40 freq))
+    ))
+    (component Ez)
+    (center (/ (+ Xdim (+ (* 2 W) S)) 44) 0 (/ t 2))
+    (size (/ (- Xdim (+ (* 2 W) S)) 2) Ydim t)
   )
 ))
 
